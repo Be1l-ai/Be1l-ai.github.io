@@ -110,56 +110,78 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    /* Updated Gallery - Book Cards (From Uiverse.io by eslam-hany) */
-  .gallery-grid {
-     display: flex;
-     justify-content: center;
-     flex-wrap: wrap;
-  }
-  .book {
-     position: relative;
-     border-radius: 10px;
-     width: 220px;
-     height: 300px;
-     background-color: whitesmoke;
-     box-shadow: 1px 1px 12px #000;
-     transform: preserve-3d;
-     perspective: 2000px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     color: #000;
-     margin: 10px;
-  }
-  .cover {
-     position: absolute;
-     top: 0;
-     background-color: lightgray;
-     width: 100%;
-     height: 100%;
-     border-radius: 10px;
-     cursor: pointer;
-     transition: all 0.5s;
-     transform-origin: 0;
-     box-shadow: 1px 1px 12px #000;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-  }
-  .book:hover .cover {
-     transition: all 0.5s;
-     transform: rotateY(-80deg);
-  }
-  .book p {
-     font-size: 20px;
-     font-weight: bolder;
-  }
-   .book .cover img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover;
-     border-radius: 10px;
-   }
+  /* Updated Gallery - Book Cards (From Uiverse.io by eslam-hany) */
+    .gallery-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .book {
+      position: relative;
+      border-radius: 10px;
+      width: 220px;
+      height: 300px;
+      background-color: whitesmoke;
+      box-shadow: 1px 1px 12px #000;
+      transform: preserve-3d;
+      perspective: 2000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      margin: 10px;
+    }
+  /* Cover: displays text on the front */
+    .cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: lightgray;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.5s;
+      transform-origin: 0;
+      box-shadow: 1px 1px 12px #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+  /* Inside: contains the image, hidden by default (rotated 180°) */
+    .inside {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background-color: whitesmoke;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(180deg);
+      transition: all 0.5s;
+      z-index: 1;
+    }
+    .inside img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .book:hover .cover {
+      transform: rotateY(-80deg);
+    }
+    .book:hover .inside {
+      transform: rotateY(0deg);
+    }
+    .book p {
+      font-size: 20px;
+      font-weight: bolder;
+      margin: 0;
+    }
     /* Bucket List Items */
     .bucket-list-item {
       background: #fff;
@@ -269,39 +291,55 @@
 
   <!-- Gallery Page -->
   <section id="gallery">
-    <h2>Gallery</h2>
-    <div class="gallery-grid">
-      <!-- Top Row: 3 Cards -->
-      <div class="book">
-        <div class="cover">
-          <img src="your-image-url.jpg" alt="Image Description">
-        </div>
+  <section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery-grid">
+    <!-- Top Row: 3 Cards -->
+    <div class="book">
+      <div class="cover">
+        <p>Cover Text 1</p>
       </div>
-      <div class="book">
-        <div class="cover">
-          <img src="your-image-url.jpg" alt="Image Description">
-        </div>
-      </div>
-      <div class="book">
-        <div class="cover">
-          <img src="your-image-url.jpg" alt="Image Description">
-        </div>
+      <div class="inside">
+        <img src="https://via.placeholder.com/220x300?text=Inside+Image+1" alt="Inside Image 1">
       </div>
     </div>
-    <div class="gallery-grid">
-      <!-- Bottom Row: 2 Cards -->
-      <div class="book">
-        <div class="cover">
-          <img src="your-image-url.jpg" alt="Image Description">
-        </div>
+    <div class="book">
+      <div class="cover">
+        <p>Cover Text 2</p>
       </div>
-      <div class="book">
-        <div class="cover">
-          <img src="your-image-url.jpg" alt="Image Description">
-        </div>
+      <div class="inside">
+        <img src="https://via.placeholder.com/220x300?text=Inside+Image+2" alt="Inside Image 2">
       </div>
+    </div>
+    <div class="book">
+      <div class="cover">
+        <p>Cover Text 3</p>
+      </div>
+      <div class="inside">
+        <img src="https://via.placeholder.com/220x300?text=Inside+Image+3" alt="Inside Image 3">
+      </div>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <!-- Bottom Row: 2 Cards -->
+    <div class="book">
+      <div class="cover">
+        <p>Cover Text 4</p>
+      </div>
+      <div class="inside">
+        <img src="https://via.placeholder.com/220x300?text=Inside+Image+4" alt="Inside Image 4">
+      </div>
+    </div>
+    <div class="book">
+      <div class="cover">
+        <p>Cover Text 5</p>
+      </div>
+      <div class="inside">
+        <img src="https://via.placeholder.com/220x300?text=Inside+Image+5" alt="Inside Image 5">
+      </div>
+    </div>
+  </div>
   </section>
-
   <!-- Bucket List Page -->
   <section id="bucket-list">
     <h2>Bucket List</h2>
