@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery - Our Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body class="pattern">
+  <div id="site-content">
+  <div id="nav-placeholder"></div>
+  <script>
+    function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.body.classList.toggle("sidebar-open"); // ✅ Apply class to <body>
+    }
+
+    fetch("sidebar/sidebar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("nav-placeholder").innerHTML = data;
+
+        // Wait for DOM to update, then attach the event listener
+        document.querySelector(".menu-toggle").addEventListener("click", toggleSidebar);
+      })
+      .catch(error => console.error("Error loading sidebar:", error));
+  </script>
+
+    <div class="content">
+      <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+          <div class="book">
+            <div class="cover"><p>Since wala pa tayong pic eto muna ;]</p></div>
+            <div class="inside"><img src="Images/Crwithboba.jpg" alt="Inside Image 1"></div>
+          </div>
+          <div class="book">
+            <div class="cover"><p>Since wala pa tayong pic eto muna ;]</p></div>
+            <div class="inside"><img src="Images/Carwithoba.jpg" alt="Inside Image 2"></div>
+          </div>
+          <div class="book">
+            <div class="cover"><p>Since wala pa tayong pic eto muna ;]</p></div>
+            <div class="inside"><img src="Images/Carwithbba.jpg" alt="Inside Image 3"></div>
+          </div>
+        </div>
+        <div class="gallery-grid">
+          <div class="book">
+            <div class="cover"><p>Cover Text 4</p></div>
+            <div class="inside"><img src="https://via.placeholder.com/220x300?text=Inside+Image+4" alt="Inside Image 4"></div>
+          </div>
+          <div class="book">
+            <div class="cover"><p>Cover Text 5</p></div>
+            <div class="inside"><img src="https://via.placeholder.com/220x300?text=Inside+Image+5" alt="Inside Image 5"></div>
+          </div>
+        </div>
+      </section>
+    </div>  
+  </div>
+
+</body>
+</html>

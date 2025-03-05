@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline - Our Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body class="pattern">
+  <div id="site-content">
+        <div id="nav-placeholder"></div>
+
+        <script>
+          function toggleSidebar() {
+          document.getElementById("sidebar").classList.toggle("open");
+          document.body.classList.toggle("sidebar-open"); // ✅ Apply class to <body>
+        }
+
+      
+          fetch("sidebar/sidebar.html")
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+      
+              // Wait for DOM to update, then attach the event listener
+              document.querySelector(".menu-toggle").addEventListener("click", toggleSidebar);
+            })
+            .catch(error => console.error("Error loading sidebar:", error));
+        </script>
+    <div class="content">
+    <section id="timeline">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>September 2024</h3>
+          <p>We met and our journey began.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>November 2024</h3>
+          <p>We became officially a couple.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>December 2024</h3>
+          <p>Our first date.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>February 2025</h3>
+          <p>Our first Valentine's Day (no date ToT).</p>
+        </div>
+        <div class="timeline-item">
+          <h3>Present</h3>
+          <p>Every day brings new adventures in our love story.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+</body>
+</html>
