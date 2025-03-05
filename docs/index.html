@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Love Story - Landing Page</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pattern">
+  <div class="sticky-note">
+    <div class="container">
+      <!-- Header / Hero -->
+      <header>
+        <h1>Welcome to Our Love Story</h1>
+        <p>Building memories, one moment at a time.</p>
+      </header>
+
+      <!-- Two Profile Circles (Venn Diagram Style) -->
+      <div class="profile-section">
+        <div class="profile-circle" style="background-image: url('Images/Carwithboba.jpg');"></div>
+        <div class="profile-circle" style="background-image: url('Images/Carwithboba.jpg');"></div>
+      </div>
+
+      <div class="photos-section">
+        <h2>Some of Our Moments</h2>
+        <div class="heart-gallery">
+          <div class="heart-img" id="heart1" style="background-image: url('Images/Carwithboba.jpg');"></div>
+          <div class="heart-img" id="heart2" style="background-image: url('Images/Carwithboba.jpg');"></div>
+          <div class="heart-img" id="heart3" style="background-image: url('Images/Carwithboba.jpg');"></div>
+          <div class="heart-img" id="heart4" style="background-image: url('Images/Carwithboba.jpg');"></div>
+        </div>
+      </div>
+
+      <!-- Login (Password Gate) -->
+      <div class="login-section">
+        <h2>Log In</h2>
+        <div class="login-box">
+          <input type="password" id="site-password" placeholder="Enter password" />
+          <button onclick="checkPassword()">Submit</button>
+          <p id="login-error"></p>
+        </div>
+      </div>
+
+      <!-- Explanation / About the Website -->
+      <div class="explanation">
+        <h2>What Is This Website All About?</h2>
+        <p>
+          This site is a celebration of our journey together—past, present, and future.
+          Inside, you’ll find our Bucket List, a Gallery of our favorite moments,
+          and a Timeline of milestones in our love story.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

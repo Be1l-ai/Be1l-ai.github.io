@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <style>
+      body {
+        margin: 0;
+        font-family: 'Indie Flower', cursive;
+        background: #f1f1f1;
+        color: #333;
+        transition: margin-left 0.5s ease;
+    }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        padding: 10px;
+    }
+
+      .pattern {
+        background: #f1f1f1;
+        background-image:
+          linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px),
+          linear-gradient(#e1e1e1 0.1em, transparent 0.1em);
+        background-size: 100% 30px;
+      }
+
+    /* Layout */
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 50px;
+    }
+      
+      /* Hero Section */
+      .hero {
+        min-height: 60vh;
+        background: lightgoldenrodyellow;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 120px;
+        margin-bottom: 120px;
+        border-top: 3px dashed white;
+        border-bottom: 3px dashed white;
+        padding: 20px;
+        width: 100vw; /* Ensure it spans full width */
+        box-sizing: border-box; /* Prevents unwanted overflow */
+      }
+
+    .sticky-note {
+        flex: 1;
+        text-align: left;
+        padding: 20px;
+    }
+
+    .sticky-note h1 {
+        font-size: 3em;
+        margin: 0;
+        color: #333;
+    }
+
+    .sticky-note p {
+        font-size: 1.5em;
+        margin-top: 20px;
+        color: #666;
+    }
+
+    /* Image Container */
+    .image-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .image-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .image-wrapper img {
+        width: 200px;
+        height: 150px;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .image-wrapper:hover img {
+        opacity: 0.5;
+    }
+
+    .image-wrapper:active img:first-child {
+        animation: swap-content 0.5s forwards;
+    }
+
+    @keyframes swap-content {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="pattern">
+  <div id="nav-placeholder"></div>
+
+  <script>
+    function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+        document.body.classList.toggle("sidebar-open"); // ✅ Apply class to <body>
+    }
+
+
+    fetch("sidebar/sidebar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("nav-placeholder").innerHTML = data;
+
+        // Wait for DOM to update, then attach the event listener
+        document.querySelector(".menu-toggle").addEventListener("click", toggleSidebar);
+      })
+  </script>
+
+  <div class="content">
+    <section id="home" class="hero">
+      <div class="container">
+          <div class="sticky-note">
+                <h1>Welcome!</h1>
+                <p>This is a sample text on the left.</p>
+          </div>
+            <div class="image-container">
+                <div class="image-wrapper">
+                    <img id="image1" src="Images/Carwithboba.jpg" alt="Image 1">
+                    <img id="image2" src="Images/Carwithboba.jpg" alt="Image 2" style="position: absolute; top: 0; left: 0; opacity: 0;">
+                </div>
+            </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
