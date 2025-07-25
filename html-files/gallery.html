@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet" />
+  <style>
+    .pattern {
+      background: #f1f1f1;
+      background-image:
+        linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px),
+        linear-gradient(#e1e1e1 0.1em, transparent 0.1em);
+      background-size: 100% 30px;
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      margin: 0;
+      font-family: 'Indie Flower', cursive;
+      color: #333;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)
+    }
+    header {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #ff6f61;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    /* Masonry layout */
+    .masonry-gallery {
+      columns: 4 200px;
+      column-gap: 1.5rem;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .masonry-gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 8px;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .masonry-gallery-item:hover {
+      transform: scale(1.02);
+      border-color: coral;
+    }
+
+    .masonry-gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid #ddd;
+      filter: none !important; /* Remove grayscale or other filters */
+    }
+
+    .masonry-gallery-item p {
+      margin: 10px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff6f61;
+      margin-top: 40px;
+      text-align: center !important;
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="pattern">
+  <h1>Our Full Gallery</h1>
+  <div class="masonry-gallery" id="gallery-grid"></div>
+
+  <script>
+    fetch("../data-folder/gallery.json")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("gallery-grid");
+
+        data.forEach((item, i) => {
+          const div = document.createElement("div");
+          div.className = "masonry-gallery-item";
+          div.innerHTML = `
+            <a href="${item.image}" target="_blank">
+              <img src="${item.image}" alt="Gallery Image ${i + 1}">
+            </a>
+            <p>${item.cover}</p>
+          `;
+          container.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>

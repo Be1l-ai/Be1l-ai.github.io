@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Catcher Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffb3ba, #ffc3d1);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            width: 800px;
+            height: 600px;
+            background: rgba(255, 240, 245, 0.9);
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+        }
+
+        #introScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #d63384;
+            font-size: 28px;
+            font-style: italic;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 27px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 16px;
+            height: 24px;
+            position: absolute;
+            left: 15px;
+            transform: rotate(-45deg);
+            background: #e91e63;
+            border-radius: 16px 16px 0 0;
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .main-heart {
+            width: 40px;
+            height: 36px;
+            transition: all 0.3s ease;
+        }
+
+        .main-heart::before,
+        .main-heart::after {
+            width: 20px;
+            height: 30px;
+        }
+
+        .floating-heart {
+            width: 25px;
+            height: 22px;
+            animation: float 3s linear;
+            opacity: 0.8;
+        }
+
+        .floating-heart::before,
+        .floating-heart::after {
+            width: 13px;
+            height: 20px;
+            background: #ff1744;
+        }
+
+        .confetti-heart {
+            width: 16px;
+            height: 14px;
+            animation: confetti 1s ease-out forwards;
+        }
+
+        .confetti-heart::before,
+        .confetti-heart::after {
+            width: 8px;
+            height: 12px;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-600px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.3) rotate(360deg) translate(50px, -50px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .catcher {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #2196f3, #03a9f4);
+            border-radius: 50%;
+            border: 3px solid #0277bd;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+            z-index: 5;
+            transition: all 0.1s ease;
+        }
+
+        .catcher:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.6);
+        }
+
+        .ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .score, .timer {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #d63384;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .pause-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .pause-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .up-btn { grid-column: 2; grid-row: 1; }
+        .left-btn { grid-column: 1; grid-row: 2; }
+        .down-btn { grid-column: 2; grid-row: 2; }
+        .right-btn { grid-column: 3; grid-row: 2; }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #e91e63;
+            font-size: 32px;
+            font-weight: bold;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #e91e63, #f06292);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        @media (max-width: 850px) {
+            #gameContainer {
+                width: 95vw;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="introScreen">
+            <div>For you my Aki</div>
+            <div>Catch my heart! 💕</div>
+        </div>
+        
+        <div class="ui" style="display: none;">
+            <div class="score">Score: <span id="scoreValue">0</span></div>
+            <button class="pause-btn" id="pauseBtn">Pause</button>
+            <div class="timer">Time: <span id="timerValue">30</span>s</div>
+        </div>
+
+        <div class="heart main-heart" id="mainHeart" style="display: none;"></div>
+        <div class="catcher" id="catcher" style="display: none;"></div>
+
+        <div class="controls" style="display: none;">
+            <button class="control-btn up-btn" id="upBtn">↑</button>
+            <button class="control-btn left-btn" id="leftBtn">←</button>
+            <button class="control-btn down-btn" id="downBtn">↓</button>
+            <button class="control-btn right-btn" id="rightBtn">→</button>
+        </div>
+    </div>
+
+    <script>
+        class HeartGame {
+            constructor() {
+                this.gameContainer = document.getElementById('gameContainer');
+                this.introScreen = document.getElementById('introScreen');
+                this.mainHeart = document.getElementById('mainHeart');
+                this.catcher = document.getElementById('catcher');
+                this.ui = document.querySelector('.ui');
+                this.controls = document.querySelector('.controls');
+                this.scoreElement = document.getElementById('scoreValue');
+                this.timerElement = document.getElementById('timerValue');
+                this.pauseBtn = document.getElementById('pauseBtn');
+                
+                this.score = 0;
+                this.timeLeft = 30;
+                this.gameOver = false;
+                this.paused = false;
+                this.moveDistance = 40;
+                
+                this.floatingHearts = [];
+                this.confettiHearts = [];
+                
+                this.init();
+            }
+
+            init() {
+                setTimeout(() => this.startGame(), 3000);
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                this.pauseBtn.addEventListener('click', () => this.togglePause());
+                
+                document.getElementById('upBtn').addEventListener('click', () => this.moveCatcher(0, -this.moveDistance));
+                document.getElementById('downBtn').addEventListener('click', () => this.moveCatcher(0, this.moveDistance));
+                document.getElementById('leftBtn').addEventListener('click', () => this.moveCatcher(-this.moveDistance, 0));
+                document.getElementById('rightBtn').addEventListener('click', () => this.moveCatcher(this.moveDistance, 0));
+
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    if (this.gameOver || this.paused) return;
+                    
+                    switch(e.key) {
+                        case 'ArrowUp': this.moveCatcher(0, -this.moveDistance); break;
+                        case 'ArrowDown': this.moveCatcher(0, this.moveDistance); break;
+                        case 'ArrowLeft': this.moveCatcher(-this.moveDistance, 0); break;
+                        case 'ArrowRight': this.moveCatcher(this.moveDistance, 0); break;
+                        case ' ': this.togglePause(); break;
+                    }
+                });
+
+                // Touch/mouse controls for catcher
+                let isDragging = false;
+                this.catcher.addEventListener('mousedown', () => isDragging = true);
+                this.catcher.addEventListener('touchstart', () => isDragging = true);
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && !this.gameOver && !this.paused) {
+                        this.setCatcherPosition(e.clientX, e.clientY);
+                    }
+                });
+
+                document.addEventListener('touchmove', (e) => {
+                    if (isDragging && !this.gameOver && !this.paused) {
+                        const touch = e.touches[0];
+                        this.setCatcherPosition(touch.clientX, touch.clientY);
+                    }
+                });
+
+                document.addEventListener('mouseup', () => isDragging = false);
+                document.addEventListener('touchend', () => isDragging = false);
+            }
+
+            setCatcherPosition(clientX, clientY) {
+                const rect = this.gameContainer.getBoundingClientRect();
+                const x = clientX - rect.left - 15; // Half of catcher width
+                const y = clientY - rect.top - 15; // Half of catcher height
+                
+                const maxX = this.gameContainer.offsetWidth - 30;
+                const maxY = this.gameContainer.offsetHeight - 30;
+                
+                this.catcher.style.left = Math.max(0, Math.min(maxX, x)) + 'px';
+                this.catcher.style.top = Math.max(0, Math.min(maxY, y)) + 'px';
+                
+                this.checkCollision();
+            }
+
+            startGame() {
+                this.introScreen.style.display = 'none';
+                this.ui.style.display = 'flex';
+                this.controls.style.display = 'grid';
+                this.mainHeart.style.display = 'block';
+                this.catcher.style.display = 'block';
+                
+                this.positionMainHeart();
+                this.positionCatcher();
+                
+                this.gameLoop = setInterval(() => this.update(), 1000/30); // 30 FPS
+                this.heartSpawner = setInterval(() => this.spawnFloatingHeart(), 700);
+                this.timer = setInterval(() => this.updateTimer(), 1000);
+            }
+
+            positionMainHeart() {
+                const x = Math.random() * (this.gameContainer.offsetWidth - 100) + 50;
+                const y = Math.random() * (this.gameContainer.offsetHeight - 200) + 100;
+                this.mainHeart.style.left = x + 'px';
+                this.mainHeart.style.top = y + 'px';
+            }
+
+            positionCatcher() {
+                const x = this.gameContainer.offsetWidth / 2 - 15;
+                const y = this.gameContainer.offsetHeight - 150;
+                this.catcher.style.left = x + 'px';
+                this.catcher.style.top = y + 'px';
+            }
+
+            moveCatcher(dx, dy) {
+                if (this.gameOver || this.paused) return;
+                
+                const currentX = parseInt(this.catcher.style.left) || 0;
+                const currentY = parseInt(this.catcher.style.top) || 0;
+                
+                const newX = Math.max(0, Math.min(this.gameContainer.offsetWidth - 30, currentX + dx));
+                const newY = Math.max(0, Math.min(this.gameContainer.offsetHeight - 30, currentY + dy));
+                
+                this.catcher.style.left = newX + 'px';
+                this.catcher.style.top = newY + 'px';
+                
+                this.checkCollision();
+            }
+
+            checkCollision() {
+                if (this.gameOver || this.paused) return;
+                
+                const heartRect = this.mainHeart.getBoundingClientRect();
+                const catcherRect = this.catcher.getBoundingClientRect();
+                
+                const overlap = !(heartRect.right < catcherRect.left || 
+                                heartRect.left > catcherRect.right || 
+                                heartRect.bottom < catcherRect.top || 
+                                heartRect.top > catcherRect.bottom);
+                
+                if (overlap) {
+                    this.score++;
+                    this.scoreElement.textContent = this.score;
+                    
+                    // Change background color
+                    const colors = ['#ffb3ba', '#ffc3d1', '#ffaaa5', '#ff8a95'];
+                    document.body.style.background = `linear-gradient(135deg, ${colors[Math.floor(Math.random() * colors.length)]}, #ffc3d1)`;
+                    
+                    // Create confetti
+                    this.createConfetti();
+                    
+                    // Reposition heart
+                    this.positionMainHeart();
+                    
+                    // Add pulse animation to score
+                    this.scoreElement.parentElement.style.animation = 'pulse 0.3s ease';
+                    setTimeout(() => {
+                        this.scoreElement.parentElement.style.animation = '';
+                    }, 300);
+                }
+            }
+
+            createConfetti() {
+                const heartPos = this.mainHeart.getBoundingClientRect();
+                const containerPos = this.gameContainer.getBoundingClientRect();
+                
+                for (let i = 0; i < 10; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'heart confetti-heart';
+                    
+                    const x = (heartPos.left - containerPos.left) + Math.random() * 60 - 30;
+                    const y = (heartPos.top - containerPos.top) + Math.random() * 60 - 30;
+                    
+                    confetti.style.left = x + 'px';
+                    confetti.style.top = y + 'px';
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    
+                    this.gameContainer.appendChild(confetti);
+                    this.confettiHearts.push(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                        const index = this.confettiHearts.indexOf(confetti);
+                        if (index > -1) this.confettiHearts.splice(index, 1);
+                    }, 1000);
+                }
+            }
+
+            spawnFloatingHeart() {
+                if (this.gameOver || this.paused) return;
+                
+                const heart = document.createElement('div');
+                heart.className = 'heart floating-heart';
+                
+                const x = Math.random() * (this.gameContainer.offsetWidth - 25);
+                heart.style.left = x + 'px';
+                heart.style.top = this.gameContainer.offsetHeight + 'px';
+                
+                // Random color variations
+                const hue = Math.random() * 60 + 300; // Pink to red range
+                heart.style.filter = `hue-rotate(${hue}deg) brightness(${0.8 + Math.random() * 0.4})`;
+                
+                this.gameContainer.appendChild(heart);
+                this.floatingHearts.push(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                    const index = this.floatingHearts.indexOf(heart);
+                    if (index > -1) this.floatingHearts.splice(index, 1);
+                }, 3000);
+            }
+
+            update() {
+                if (this.paused) return;
+                
+                // Update floating hearts color
+                this.floatingHearts.forEach(heart => {
+                    const hue = Math.random() * 60 + 300;
+                    heart.style.filter = `hue-rotate(${hue}deg) brightness(${0.8 + Math.random() * 0.4})`;
+                });
+            }
+
+            updateTimer() {
+                if (this.gameOver || this.paused) return;
+                
+                this.timeLeft--;
+                this.timerElement.textContent = this.timeLeft;
+                
+                if (this.timeLeft <= 0) {
+                    this.endGame();
+                }
+            }
+
+            togglePause() {
+                this.paused = !this.paused;
+                this.pauseBtn.textContent = this.paused ? 'Resume' : 'Pause';
+            }
+
+            endGame() {
+                this.gameOver = true;
+                clearInterval(this.gameLoop);
+                clearInterval(this.heartSpawner);
+                clearInterval(this.timer);
+                
+                const gameOverScreen = document.createElement('div');
+                gameOverScreen.className = 'game-over';
+                gameOverScreen.innerHTML = `
+                    <div>You caught my heart</div>
+                    <div>${this.score} times po akiii 💕</div>
+                    <button class="restart-btn" onclick="location.reload()">Play Again</button>
+                `;
+                
+                this.gameContainer.appendChild(gameOverScreen);
+            }
+        }
+
+        // Start the game when page loads
+        window.addEventListener('load', () => {
+            new HeartGame();
+        });
+    </script>
+</body>
+</html>

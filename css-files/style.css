@@ -1,0 +1,474 @@
+/*************************************
+ * Global & Pattern Background
+ *************************************/
+ body {
+    margin: 0;
+    font-family: 'Indie Flower', cursive;
+    color: #333;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)
+  }
+  
+  .pattern {
+    background: #f1f1f1;
+    background-image:
+      linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px),
+      linear-gradient(#e1e1e1 0.1em, transparent 0.1em);
+    background-size: 100% 30px;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .sticky-note {
+    background: #fff8e1; /* Light orange background for the sticky note */
+    margin:30px;
+    display:flex;
+    border: 2px solid #ff9a9e; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 2rem;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  /*************************************
+   * Page Layout
+   *************************************/
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  header {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #ff6f61;
+  }
+  header p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /*************************************
+   * Profile Images (Venn Diagram Style)
+   *************************************/
+  .profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+  }
+  .profile-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 1rem;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .profile-circle:nth-child(1) {
+    margin-right: -20px;
+    z-index: 2;
+  }
+  .profile-circle:nth-child(2) {
+    margin-left: -20px;
+  }
+  
+  /*************************************
+   * Heart-Shaped Images Section
+   *************************************/
+  .photos-section {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  
+  .photos-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #ff6f61;
+  }
+  
+  .heart-gallery {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 150px;
+    overflow: hidden;
+  }
+  
+  .heart-img {
+    position: absolute;
+    top: 15px;
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    clip-path: polygon(
+      50% 15%,
+      61% 3%,
+      78% 0%,
+      93% 7%,
+      100% 25%,
+      100% 40%,
+      95% 50%,
+      78% 69%,
+      50% 100%,
+      22% 69%,
+      5% 50%,
+      0% 40%,
+      0% 25%,
+      7% 7%,
+      22% 0%,
+      39% 3%
+    );
+  }
+  /*************************************
+   * Explanation / Footer Section
+   *************************************/
+  .explanation {
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .explanation h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff6f61;
+  }
+  .explanation p {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+    /* Hero Section: Notebook-Style Front Page Using Pattern */
+    .hero {
+      min-height: 60vh;
+      background:  lightgoldenrodyellow;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 120px;
+      margin-bottom: 120px;
+      border-top: 3px dashed white;
+      border-bottom: 3px dashed white;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-size: 3em;
+      margin: 0;
+      color: #333;
+    }
+    .hero p {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #666;
+    }
+    /* Section Styles */
+    section {
+      padding: 60px 20px;
+    }
+    section h2 {
+      font-size: 2.5em;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* Updated Gallery - Book Cards (From Uiverse.io by eslam-hany) */
+    .gallery-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .book {
+      position: relative;
+      border-radius: 10px;
+      width: 220px;
+      height: 300px;
+      background-color: whitesmoke;
+      box-shadow: 1px 1px 12px #000;
+      transform: preserve-3d;
+      perspective: 2000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      margin: 10px; 
+    }
+    /* Cover: displays text on the front */
+    .cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: lightgray;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.5s;
+      transform-origin: 0;
+      box-shadow: 1px 1px 12px #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .inside {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background-color: whitesmoke;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inside img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .book:hover .cover {
+      transform: rotateY(-80deg);
+    }
+    .book:hover .inside {
+      transform: rotateY(0deg);
+    }
+    .book p {
+      font-size: 15px;
+      font-weight: bolder;
+      margin: 10px;
+    }
+    /* Bucket List Items */
+    .bucket-list-item {
+      background: #fff;
+      margin: 10px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bucket-list-item h3 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    .bucket-list-item p {
+      margin: 5px 0 0 0;
+      flex: 1;
+      padding-right: 10px;
+    }
+
+    .see-more-button {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 20px;
+  background: #ffb4b8;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.see-more-button:hover {
+  background: #ff9aa2;
+}
+
+    /* Timeline */
+    .timeline {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 3px solid coral;
+      position: relative;
+    }
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: -9px;
+      top: 20px;
+      width: 18px;
+      height: 18px;
+      background: coral;
+      border-radius: 50%;
+    }
+    /* Checkbox (from Uiverse.io by PriyanshuGupta28) for each bucket list item */
+    .checkbox-wrapper input[type="checkbox"] {
+      visibility: hidden;
+      display: none;
+    }
+    .checkbox-wrapper *,
+    .checkbox-wrapper ::after,
+    .checkbox-wrapper ::before {
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .checkbox-wrapper {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      width: 30px;
+      height: 30px;
+    }
+    .checkbox-wrapper .label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .checkbox-wrapper .check {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      opacity: 0;
+    }
+    .checkbox-wrapper .label svg {
+      vertical-align: middle;
+    }
+    .checkbox-wrapper .path1 {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: .5s stroke-dashoffset;
+      opacity: 0;
+    }
+    .checkbox-wrapper .check:checked + .label svg g path {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+/*************************************
+* Login (Password Gate) Section
+*************************************/
+#login-section {
+    text-align: center;
+    margin: 3rem 0;
+  }
+.login-box {
+    display: flexbox;
+    margin-left: auto;
+    margin-right:auto;
+    padding: 1rem;
+    border: 1px solid #ff9a9e;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+.login-box input[type="password"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ff9a9e;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    margin-right:auto;
+    margin-left:auto;
+    width: 90%;
+  }
+.login-box button {
+    display:flex;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background: #ff6f61;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+  }
+.login-box button:hover {
+    background: #ff5252;
+  }
+#login-error {
+    color: red;
+    margin-top: 0.5rem;
+  }
+
+.heart-gallery {
+  position: relative;
+  height: 200px;
+}
+
+.heart-img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 120px;
+  height: 120px;
+  background-size: cover;
+  opacity: 0;
+  animation: heartMove 6s ease-in-out infinite;
+}
+
+.heart-img:nth-child(1) {
+  animation-delay: 0s;
+}
+.heart-img:nth-child(2) {
+  animation-delay: 1.5s;
+}
+.heart-img:nth-child(3) {
+  animation-delay: 3s;
+}
+.heart-img:nth-child(4) {
+  animation-delay: 4.5s;
+}
+
+@keyframes heartMove {
+  0% {
+    left: -150px;
+    opacity: 0;
+  }
+  20% {
+    left: 200px;
+    opacity: 1;
+  }
+  50% {
+    left: 400px;
+    opacity: 1;
+  }
+  80% {
+    left: 600px;
+    opacity: 0;
+  }
+  100% {
+    left: 800px;
+    opacity: 0;
+  }
+}
+
+
+/*************************************
+ * Responsive Adjustments
+*************************************/
+@media (max-width: 768px) {
+  .profile-section {
+    flex-direction: column;
+  }
+  .profile-circle:nth-child(1),
+  .profile-circle:nth-child(2) {
+    margin: 0.5rem 0;
+  }
+}
